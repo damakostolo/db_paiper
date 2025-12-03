@@ -1,0 +1,88 @@
+// Prisma schema defining PostgreSQL data model for the secure production planning database.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ProductionPlan {
+  PlanID      Int                     @id @default(autoincrement())
+  Year        Int
+  Quarter     Int?
+  Description String?
+
+  items       ProductionPlanItem[]
+
+  @@check(Year >= 2000)
+  @@check(Quarter is null OR (Quarter >= 1 AND Quarter <= 4))
+}
+
+model Products {
+  ProductID Int                     @id @default(autoincrement())
+  Name      String                  @db.VarChar(255)
+  Unit      String                  @db.VarChar(50)
+
+  norms     ConsumptionNorm[]
+  planItems ProductionPlanItem[]
+
+  @@unique([Name])
+}
+
+model Materials {
+  MaterialID Int                   @id @default(autoincrement())
+  Name       String                @db.VarChar(255)
+  Category   String?               @db.VarChar(100)
+  Unit       String                @db.VarChar(50)
+
+  norms      ConsumptionNorm[]
+  inventory  Inventory[]
+
+  @@unique([Name])
+}
+
+model ConsumptionNorm {
+  ProductID       Int
+  MaterialID      Int
+  QuantityPerUnit Float
+
+  product  Products  @relation(fields: [ProductID], references: [ProductID])
+  material Materials @relation(fields: [MaterialID], references: [MaterialID])
+
+  @@id([ProductID, MaterialID])
+  @@check(QuantityPerUnit > 0)
+}
+
+model ProductionPlanItem {
+  PlanID    Int
+  ProductID Int
+  Quantity  Int
+
+  plan    ProductionPlan @relation(fields: [PlanID], references: [PlanID])
+  product Products       @relation(fields: [ProductID], references: [ProductID])
+
+  @@id([PlanID, ProductID])
+  @@check(Quantity > 0)
+}
+
+model Warehouses {
+  WarehouseID Int                 @id @default(autoincrement())
+  Name        String              @unique
+  Location    String?
+
+  inventory   Inventory[]
+}
+
+model Inventory {
+  MaterialID   Int
+  WarehouseID  Int
+  CurrentStock Float @default(0)
+
+  material  Materials  @relation(fields: [MaterialID], references: [MaterialID])
+  warehouse Warehouses @relation(fields: [WarehouseID], references: [WarehouseID])
+
+  @@id([MaterialID, WarehouseID])
+  @@check(CurrentStock >= 0)
+}
