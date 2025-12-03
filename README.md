@@ -1,16 +1,24 @@
 # Secure Production Planning Stack
 
-This repository starts the foundation for a secure production-planning application centered on a PostgreSQL database accessed via Prisma. Service scaffolds are provided for a NestJS backend and Next.js frontend.
+This repository delivers a secure-first production-planning stack with a PostgreSQL database accessed via Prisma, a NestJS API, and a minimal Next.js client.
 
 ## Database
 - Prisma schema defined in `prisma/schema.prisma` targeting PostgreSQL.
 - Example environment file `.env.example` documents required secrets/connection strings.
 - Models include production plans, products, materials, consumption norms, warehouses, and inventory with integrity checks and unique constraints.
 
-## Next steps
-1. Create a real `.env` (never commit secrets) and run `prisma migrate dev` after installing Prisma dependencies.
-2. Scaffold NestJS backend in `backend/` and wire it to Prisma client with robust auth/validation.
-3. Scaffold Next.js frontend in `frontend/` to consume the API with minimal UI but secure defaults.
+## Backend (NestJS)
+- Location: `backend/`
+- Run: `npm install` then `npm run start:dev`
+- Environment: `DATABASE_URL` (required), `PORT` (default 3001)
+- Security: Helmet enabled, strict validation via Nest pipes. Extend with JWT/RBAC guards for production.
+- Routes: `/products` (CRUD subset) and `/plans` (create/list/read with items).
+
+## Frontend (Next.js)
+- Location: `frontend/`
+- Run: `npm install` then `npm run dev`
+- Environment: `NEXT_PUBLIC_API_BASE_URL` pointing to the NestJS server (defaults to http://localhost:3001)
+- UI: Basic forms to add products and create production plans; lists products and plans.
 
 ## Security considerations
 - Use role-based access control and JWTs for API access.

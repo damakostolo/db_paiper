@@ -1,6 +1,15 @@
 # Frontend (Next.js)
 
-This placeholder directory is intended for a minimal Next.js client that consumes the secured API. Keep styling minimal (e.g., basic CSS/Chakra/Tailwind) and prioritize security features:
-- Client-side form validation before requests.
-- Strict Content Security Policy and secure cookies for JWTs (HTTP-only, SameSite=Lax or Strict).
-- Avoid exposing secrets; load API base URL from environment variables.
+A minimal Next.js client to interact with the NestJS API. It provides basic forms to add products and create production plans while consuming the secure API.
+
+## Scripts
+- `npm install`
+- `npm run dev`
+
+## Environment
+- `NEXT_PUBLIC_API_BASE_URL` — URL of the NestJS API (default `http://localhost:3001`)
+
+## Features
+- Add new products with name and unit
+- Create production plans with optional quarter, description, and line items
+- View lists of products and plans
