@@ -1,33 +1,18 @@
-import { Type } from 'class-transformer';
-import { IsArray, IsInt, IsOptional, IsPositive, IsString, Max, Min, ValidateNested } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 
-class PlanItemDto {
-  @IsInt()
-  @IsPositive()
-  productId!: number;
+const planItemSchema = z.object({
+  productId: z.number().int().positive(),
+  quantity: z.number().int().positive(),
+});
 
-  @IsInt()
-  @IsPositive()
-  quantity!: number;
-}
+const createPlanSchema = z.object({
+  year: z.number().int().min(2000),
+  quarter: z.number().int().min(1).max(4).nullable().optional(),
+  description: z.string().trim().max(255).optional(),
+  items: z.array(planItemSchema),
+});
 
-export class CreatePlanDto {
-  @IsInt()
-  @Min(2000)
-  year!: number;
+export class CreatePlanDto extends createZodDto(createPlanSchema) {}
 
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(4)
-  quarter?: number;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => PlanItemDto)
-  items!: PlanItemDto[];
-}
+export const CreatePlanSchema = createPlanSchema;

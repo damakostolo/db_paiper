@@ -3,6 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProductsModule } from './products/products.module';
 import { PlansModule } from './plans/plans.module';
+import { MaterialsModule } from './materials/materials.module';
+import { WarehousesModule } from './warehouses/warehouses.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -10,6 +13,9 @@ import { PlansModule } from './plans/plans.module';
     PrismaModule,
     ProductsModule,
     PlansModule,
+    MaterialsModule,
+    WarehousesModule,
+    InventoryModule,
   ],
 })
 export class AppModule {}

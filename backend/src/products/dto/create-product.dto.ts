@@ -1,11 +1,11 @@
-import { IsString, Length } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 
-export class CreateProductDto {
-  @IsString()
-  @Length(1, 255)
-  Name!: string;
+const createProductSchema = z.object({
+  Name: z.string().min(1).max(255),
+  Unit: z.string().min(1).max(50),
+});
 
-  @IsString()
-  @Length(1, 50)
-  Unit!: string;
-}
+export class CreateProductDto extends createZodDto(createProductSchema) {}
+
+export const CreateProductSchema = createProductSchema;
