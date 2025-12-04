@@ -127,11 +127,11 @@ export default function HomePage() {
       body: JSON.stringify({ Name: productName, Unit: productUnit }),
     });
     if (!res.ok) {
-      setError('Не удалось создать продукт');
+      setError('Не вдалося створити продукт');
       return;
     }
     setProductName('');
-    setMessage('Продукт сохранён');
+    setMessage('Продукт збережено');
     await refreshProducts();
   };
 
@@ -151,14 +151,14 @@ export default function HomePage() {
       }),
     });
     if (!res.ok) {
-      setError('Не удалось создать план');
+      setError('Не вдалося створити план');
       return;
     }
     setPlanDescription('');
     setPlanQuarter('');
     setPlanProductId('');
     setPlanQuantity('');
-    setMessage('План сохранён');
+    setMessage('План збережено');
     await refreshPlans();
   };
 
@@ -173,12 +173,12 @@ export default function HomePage() {
       body: JSON.stringify({ Name: materialName, Category: materialCategory || undefined, Unit: materialUnit }),
     });
     if (!res.ok) {
-      setError('Не удалось создать материал');
+      setError('Не вдалося створити матеріал');
       return;
     }
     setMaterialName('');
     setMaterialCategory('');
-    setMessage('Материал сохранён');
+    setMessage('Матеріал збережено');
     await refreshMaterials();
   };
 
@@ -193,12 +193,12 @@ export default function HomePage() {
       body: JSON.stringify({ Name: warehouseName, Location: warehouseLocation || undefined }),
     });
     if (!res.ok) {
-      setError('Не удалось создать склад');
+      setError('Не вдалося створити склад');
       return;
     }
     setWarehouseName('');
     setWarehouseLocation('');
-    setMessage('Склад сохранён');
+    setMessage('Склад збережено');
     await refreshWarehouses();
   };
 
@@ -217,13 +217,13 @@ export default function HomePage() {
       }),
     });
     if (!res.ok) {
-      setError('Не удалось обновить остатки');
+      setError('Не вдалося оновити залишки');
       return;
     }
     setInventoryMaterialId('');
     setInventoryWarehouseId('');
     setInventoryStock('');
-    setMessage('Остатки обновлены');
+    setMessage('Залишки оновлено');
     await refreshInventory();
   };
 
@@ -231,8 +231,8 @@ export default function HomePage() {
     <main style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem', fontFamily: 'system-ui' }}>
       <h1 style={{ marginBottom: '1rem' }}>Production Planner</h1>
       <p style={{ color: '#444' }}>
-        Минимальный UI для работы с защищённым API. Настройте переменную окружения
-        <code style={{ marginLeft: 4 }}>NEXT_PUBLIC_API_BASE_URL</code> для указания адреса NestJS сервера.
+        Мінімальний UI для роботи із захищеним API. Налаштуйте змінну оточення
+        <code style={{ marginLeft: 4 }}>NEXT_PUBLIC_API_BASE_URL</code> для вказівки адреси NestJS сервера.
       </p>
 
       {error && (
@@ -249,34 +249,34 @@ export default function HomePage() {
 
       <section style={{ display: 'grid', gap: '2rem' }}>
         <div>
-          <h2>Добавить продукт</h2>
+          <h2>Додати продукт</h2>
           <form onSubmit={onCreateProduct} style={{ display: 'grid', gap: '0.5rem', maxWidth: 320 }}>
             <label style={{ display: 'grid', gap: 4 }}>
-              Название
+              Назва
               <input
                 required
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                placeholder="Например, Widget"
+                placeholder="Наприклад, Widget"
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Единица измерения
+              Одиниця виміру
               <input
                 required
                 value={productUnit}
                 onChange={(e) => setProductUnit(e.target.value)}
-                placeholder="pcs"
+                placeholder="шт"
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               />
             </label>
             <button type="submit" style={{ padding: '0.5rem', background: '#0b8', color: 'white', border: 'none' }}>
-              Сохранить
+              Зберегти
             </button>
           </form>
           <div style={{ marginTop: '1rem' }}>
-            <h3>Список продуктов</h3>
+            <h3>Список продуктів</h3>
             <ul>
               {products.map((p) => (
                 <li key={p.ProductID}>
@@ -288,10 +288,10 @@ export default function HomePage() {
         </div>
 
         <div>
-          <h2>Создать производственный план</h2>
+          <h2>Створити виробничий план</h2>
           <form onSubmit={onCreatePlan} style={{ display: 'grid', gap: '0.5rem', maxWidth: 420 }}>
             <label style={{ display: 'grid', gap: 4 }}>
-              Год
+              Рік
               <input
                 type="number"
                 required
@@ -302,7 +302,7 @@ export default function HomePage() {
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Квартал (1-4, необязательно)
+              Квартал (1-4, необов'язково)
               <input
                 type="number"
                 min={1}
@@ -313,7 +313,7 @@ export default function HomePage() {
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Описание
+              Опис
               <input
                 value={planDescription}
                 onChange={(e) => setPlanDescription(e.target.value)}
@@ -327,7 +327,7 @@ export default function HomePage() {
                 onChange={(e) => setPlanProductId(e.target.value === '' ? '' : Number(e.target.value))}
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               >
-                <option value="">-- выберите --</option>
+                <option value="">-- оберіть --</option>
                 {products.map((p) => (
                   <option key={p.ProductID} value={p.ProductID}>
                     #{p.ProductID} {p.Name}
@@ -336,7 +336,7 @@ export default function HomePage() {
               </select>
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Количество
+              Кількість
               <input
                 type="number"
                 min={1}
@@ -346,12 +346,12 @@ export default function HomePage() {
               />
             </label>
             <button type="submit" style={{ padding: '0.5rem', background: '#0b8', color: 'white', border: 'none' }}>
-              Создать план
+              Створити план
             </button>
           </form>
 
           <div style={{ marginTop: '1rem' }}>
-            <h3>Существующие планы</h3>
+            <h3>Існуючі плани</h3>
             <ul>
               {plans.map((plan) => (
                 <li key={plan.PlanID} style={{ marginBottom: '0.5rem' }}>
@@ -373,10 +373,10 @@ export default function HomePage() {
         </div>
 
         <div>
-          <h2>Материалы</h2>
+          <h2>Матеріали</h2>
           <form onSubmit={onCreateMaterial} style={{ display: 'grid', gap: '0.5rem', maxWidth: 420 }}>
             <label style={{ display: 'grid', gap: 4 }}>
-              Название
+              Назва
               <input
                 required
                 value={materialName}
@@ -385,7 +385,7 @@ export default function HomePage() {
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Категория (опционально)
+              Категорія (опціонально)
               <input
                 value={materialCategory}
                 onChange={(e) => setMaterialCategory(e.target.value)}
@@ -393,21 +393,21 @@ export default function HomePage() {
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Единица
+              Одиниця
               <input
                 required
                 value={materialUnit}
                 onChange={(e) => setMaterialUnit(e.target.value)}
-                placeholder="kg"
+                placeholder="кг"
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               />
             </label>
             <button type="submit" style={{ padding: '0.5rem', background: '#0b8', color: 'white', border: 'none' }}>
-              Сохранить материал
+              Зберегти матеріал
             </button>
           </form>
           <div style={{ marginTop: '1rem' }}>
-            <h3>Список материалов</h3>
+            <h3>Список матеріалів</h3>
             <ul>
               {materials.map((m) => (
                 <li key={m.MaterialID}>
@@ -419,10 +419,10 @@ export default function HomePage() {
         </div>
 
         <div>
-          <h2>Склады</h2>
+          <h2>Склади</h2>
           <form onSubmit={onCreateWarehouse} style={{ display: 'grid', gap: '0.5rem', maxWidth: 420 }}>
             <label style={{ display: 'grid', gap: 4 }}>
-              Название склада
+              Назва складу
               <input
                 required
                 value={warehouseName}
@@ -431,7 +431,7 @@ export default function HomePage() {
               />
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Локация (опционально)
+              Локація (опціонально)
               <input
                 value={warehouseLocation}
                 onChange={(e) => setWarehouseLocation(e.target.value)}
@@ -439,11 +439,11 @@ export default function HomePage() {
               />
             </label>
             <button type="submit" style={{ padding: '0.5rem', background: '#0b8', color: 'white', border: 'none' }}>
-              Сохранить склад
+              Зберегти склад
             </button>
           </form>
           <div style={{ marginTop: '1rem' }}>
-            <h3>Список складов</h3>
+            <h3>Список складів</h3>
             <ul>
               {warehouses.map((w) => (
                 <li key={w.WarehouseID}>
@@ -455,17 +455,17 @@ export default function HomePage() {
         </div>
 
         <div>
-          <h2>Запасы материалов</h2>
+          <h2>Запаси матеріалів</h2>
           <form onSubmit={onUpsertInventory} style={{ display: 'grid', gap: '0.5rem', maxWidth: 520 }}>
             <label style={{ display: 'grid', gap: 4 }}>
-              Материал
+              Матеріал
               <select
                 required
                 value={inventoryMaterialId}
                 onChange={(e) => setInventoryMaterialId(e.target.value === '' ? '' : Number(e.target.value))}
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               >
-                <option value="">-- выберите --</option>
+                <option value="">-- оберіть --</option>
                 {materials.map((m) => (
                   <option key={m.MaterialID} value={m.MaterialID}>
                     #{m.MaterialID} {m.Name}
@@ -481,7 +481,7 @@ export default function HomePage() {
                 onChange={(e) => setInventoryWarehouseId(e.target.value === '' ? '' : Number(e.target.value))}
                 style={{ padding: '0.5rem', border: '1px solid #ccc' }}
               >
-                <option value="">-- выберите --</option>
+                <option value="">-- оберіть --</option>
                 {warehouses.map((w) => (
                   <option key={w.WarehouseID} value={w.WarehouseID}>
                     #{w.WarehouseID} {w.Name}
@@ -490,7 +490,7 @@ export default function HomePage() {
               </select>
             </label>
             <label style={{ display: 'grid', gap: 4 }}>
-              Остаток
+              Залишок
               <input
                 type="number"
                 min={0}
@@ -502,16 +502,16 @@ export default function HomePage() {
               />
             </label>
             <button type="submit" style={{ padding: '0.5rem', background: '#0b8', color: 'white', border: 'none' }}>
-              Обновить остатки
+              Оновити залишки
             </button>
           </form>
 
           <div style={{ marginTop: '1rem' }}>
-            <h3>Текущие остатки</h3>
+            <h3>Поточні залишки</h3>
             <ul>
               {inventory.map((row) => (
                 <li key={`${row.MaterialID}-${row.WarehouseID}`}>
-                  Материал #{row.MaterialID} {row.material ? `(${row.material.Name})` : ''} на складе #{row.WarehouseID}{' '}
+                  Матеріал #{row.MaterialID} {row.material ? `(${row.material.Name})` : ''} на складі #{row.WarehouseID}{' '}
                   {row.warehouse ? `(${row.warehouse.Name})` : ''}: {row.CurrentStock}
                 </li>
               ))}
